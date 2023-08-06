@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Article
 from .models import Service
+from .models import Member
 class ArticleSerializer(serializers.ModelSerializer):
     title = serializers.CharField(max_length=200, required=True)
     article_text = serializers.CharField(max_length=500,required=True)
@@ -21,3 +22,12 @@ class ServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Service
         fields = ('service_name', 'service_description', 'bootstrap_icon')
+
+
+
+
+
+class MemberSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Member
+        fields = ('name', 'email', 'role', 'linkedin_link')  # Added 'linkedin_link'

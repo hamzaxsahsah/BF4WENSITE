@@ -20,3 +20,14 @@ class Service(models.Model):
 
     def __str__(self):
         return self.service_name
+    
+
+
+class Member(models.Model):
+    name = models.CharField(max_length=200)
+    email = models.EmailField(max_length=254, unique=True)
+    role = models.CharField(max_length=100)
+    linkedin_link = models.URLField(blank=True, null=True)  # Added linkedin_link
+
+    def __str__(self):
+        return self.name

@@ -5,6 +5,9 @@ from .models import Article
 from .serializers import ArticleSerializer
 from .models import Service
 from .serializers import ServiceSerializer
+from .models import Member
+from .serializers import MemberSerializer
+
 class ArticleView(APIView):
   
     def get(self, request, *args, **kwargs):
@@ -35,6 +38,26 @@ class ServiceView(APIView):
   
     def post(self, request, *args, **kwargs):
         serializer = ServiceSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'status': 'success', 'data': serializer.data}, status=status.HTTP_201_CREATED)
+        else:
+            return Response({'status': 'error', 'data': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+        
+
+
+
+
+
+class MemberView(APIView):
+  
+    def get(self, request, *args, **kwargs):
+        members = Member.objects.all()
+        serializer = MemberSerializer(members, many=True)
+        return Response({'status': 'success', 'members': serializer.data}, status=status.HTTP_200_OK)
+  
+    def post(self, request, *args, **kwargs):
+        serializer = MemberSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response({'status': 'success', 'data': serializer.data}, status=status.HTTP_201_CREATED)
